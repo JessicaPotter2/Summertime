@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="author" content="mrlong.com@gmail.com">
+<title>注册页面</title>
+<script type="text/javascript" src="jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="bootstrap/css/bootstrap.min.css">
+<script type="text/javascript" src="../src/bootstrap3-validation.js"></script>
+
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+    <link href="bootstrap-ie78.css" rel="stylesheet" type="text/css" />
+    <script src="respond.min.js" type="text/javascript"></script> 
+    <script src="html5.js" type="text/javascript"></script>
+    <![endif]-->
+<style type="text/css">
+#bg {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+}
+</style>
+</head>
+
+<script type="text/javascript">
+  $(function(){
+
+    //1. 简单写法：
+    $("#form1").validation({icon:true});
+
+    // 要从后台数据确定填的邮箱是不是已注册过了，采用回调方法
+    // $("form").validation(function(obj,params){
+    //   if (obj.id=='mail'){
+    //     $.post("/verifymail",{mail :$(obj).val()},function(data){
+    //       params.err = !data.success;
+    //       params.msg = data.msg;
+    //     });
+    //   }}
+    //   ,{reqmark:true} //这个参数是设必填不要显示有星号，默认是有星号的
+    // );
+
+   
+    //.注册
+    $("#submit1").on('click',function(event){
+      // 2.最后要调用 valid()方法。
+      //  valide(object,msg),提示信息显示，object位置后面增加提示信息。如不填object 则自动找最后一个button submit.
+      //  valide(msg)
+      
+      //第一种提示写法
+      if ($("#form1").valid(this,'内容出错')==false){
+        return false;
+      }
+      
+      //第二种提示写法，回调方法你自己提示就随意你了。
+      //if ($("#form1").valid(this,function(err){alert(err)})==false){
+      //  return false;
+      //}
+      
+
+      
+    })
+
+    $("#form2").validation();
+    //.注册
+    $("#submit2").on('click',function(event){
+      // 2.最后要调用 valid()方法。
+      if ($("#form2").valid()==false){
+        alert('填写信息不完整。');
+        return false;
+      }
+    });
+
+
+    $("#form3").validation(function(obj,params){  
+      //扩展校验方法
+    },{reqmark:false,icon:true});
+    //.注册
+    $("#submit3").on('click',function(event){
+      // 2.最后要调用 valid()方法。
+      if ($("#form3").valid('填写信息不完整。')==false){
+        //alert('填写信息不完整。');
+        return false;
+      }
+    });
+
+  })
+</script>
+<script type="text/javascript">
+ function checkpwd(){
+  var p1=document.form1.pwd1.value;
+  var p2=document.form1.pwd2.value;
+  if(p1!=p2){
+   document.getElementById("msg").innerHTML="两次输入密码不一致，请重新输入";
+   return false;
+       }
+</script>
+<body>
+<body>
+	<img id='bg' src="back.jpg">
+	<!-- 水平排列的表单 -->
+	<div class="container">
+		<div class="page-header">
+			<h2>欢迎注册</h2>
+		</div>
+		<form class="form-horizontal" name="form1" id="form1"
+			action="../registerDb.jsp" role="form">
+			<div class="form-group">
+				<label for="name" class="col-sm-3 control-label">学号</label>
+				<div class="col-sm-3">
+					<input type="text" class="form-control" name="name" id="name"
+						check-type="mobile required">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="pw" class="col-sm-3 control-label">密码</label>
+				<div class="col-sm-3">
+					<input type="password" class="form-control" name="pw" id="pw"
+						check-type="required" minlength="6">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="mail" class="col-sm-3 control-label">Email</label>
+				<div class="col-sm-3">
+					<input type="text" class="form-control" name="mail" id="mail"
+						placeholder="xxxx@xx.com" check-type="mail required">
+				</div>
+			</div>
+			<div class="form-group">
+
+				<label for="banji" class="col-sm-3 control-label">行政班级</label>
+				<div class="col-sm-3">
+					<input type="text" class="form-control" name="banji" id="banji"
+						placeholder="电子商务13-3班 " >
+				</div>
+
+
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label"></label>
+				<div class="col-md-1">
+					<button class="btn btn-small btn-primary form-control"
+						type="button">注册</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+</html>
